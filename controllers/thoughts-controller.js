@@ -33,6 +33,24 @@ const thoughtController = {
         Thought.findOneAndDelete({ _id: params.thoughtId })
     },
 
+    // add reaction by thought id
+    addReaction({ params, body }, res) {
+        Thought.findOneAndUpdate(
+            { _id: params.thoughtId },
+            { $push: { reaction: body } },
+            { new: true }
+        )
+    },
+
+    // remove reaction
+    removeReaction({ params }, res) {
+        Thought.findOneAndUpdate(
+            { _id: params.thoughtId },
+            { $pull: { reaction: { reactionId: params.reactionId } } },
+            { new: true }
+        )
+    }
+
 
     // addReaction functions here - find thoughts and add reaction
 }
