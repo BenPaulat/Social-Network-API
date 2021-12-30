@@ -1,5 +1,3 @@
-// normal CRUD + addFriend/RemoveFriend
-
 const { User } = require('../models');
 
 const userController = {
@@ -7,6 +5,15 @@ const userController = {
     // get all users
     getAllUsers(req, res) {
         User.find({})
+        .populate({
+            path: 'thoughts'
+        })
+        .sort({ createdAt: -1 })
+        .then(dbUserData => res.json(dbUserData))
+        .catch(err => {
+            console.log(err);
+            res.status(400).json(err);
+        });
     },
 
     // get one user by id
