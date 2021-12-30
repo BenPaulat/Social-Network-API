@@ -89,6 +89,13 @@ const thoughtController = {
             { $push: { reaction: body } },
             { new: true }
         )
+        .then(dbUserData => {
+            if (!dbUserData) {
+                return res.status(404).json({ message: 'No user found with this id!' });
+            }
+            res.json(dbUserData);
+        })
+        .catch(err => res.json(err));
     },
 
     // remove reaction
@@ -98,8 +105,9 @@ const thoughtController = {
             { $pull: { reaction: { reactionId: params.reactionId } } },
             { new: true }
         )
+        .then(dbUserData => res.json(dbUserData))
+        .catch(err => res.json(err));
     }
+};
 
-
-    // addReaction functions here - find thoughts and add reaction
-}
+module.exports = thoughtController;
