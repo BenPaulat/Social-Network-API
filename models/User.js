@@ -6,13 +6,13 @@ const UserSchema = new Schema(
             type: String,
             unique: true,
             required: true,
-            // trimmed - refer to mongoose docs
+            trim: true
         },
         email: {
             type: String,
             required: true,
             unique: true,
-            // Validate matches email address format - refer to mongoose docs
+            match: [/.+@.+\..+/, 'Must match an email address!']
         },
         thoughts: [
             {

@@ -10,15 +10,15 @@ const {
     removeReaction
 } = require('../../controllers/thoughts-controller');
 
-// GET all thoughts and POST new thought for /api/thoughts/:userId
+// GET all thoughts and POST thought
 router
-    .route('/:userId')
+    .route('/')
     .get(getThoughts)
     .post(createThought);
 
 // GET, PUT, and DELETE for /api/thoughts/:userId/:thoughtId
 router
-    .route('/:userId/:thoughtId')
+    .route('/:thoughtId')
     .get(getThoughtById)
     .put(updateThought)
     .delete(deleteThought);

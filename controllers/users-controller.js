@@ -1,3 +1,4 @@
+const { response } = require('express');
 const { User } = require('../models');
 
 const userController = {
@@ -69,10 +70,10 @@ const userController = {
     },
 
     // add friend
-    addFriend({ params, body }, res) {
-        User.findByIdAndUpdate(
+    addFriend({ params }, res) {
+        User.findOneAndUpdate(
             { _id: params.userId },
-            { $push: { friends: body } },
+            { $set: { friends: params.friendId } },
             { new: true }
         )
         .then(dbUserData => {
@@ -88,7 +89,7 @@ const userController = {
     removeFriend({ params }, res) {
         User.findOneAndUpdate(
             { _id: params.userId },
-            { $pull: { friends: { friendId: params.friendId } } },
+            { $pull: { friends: params.friendId } },
             { new: true }
         )
         .then(dbUserData => res.json(dbUserData))

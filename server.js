@@ -1,6 +1,5 @@
-// move 1 and 12-16 to config - rest stays with edit
+const connection = require('./config/connection');
 
-const mongoose = require('mongoose');
 const express = require('express');
 
 const app = express();
@@ -11,11 +10,6 @@ app.use(express.urlencoded({ extended: true }));
 
 app.use(require('./routes'));
 
-mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/', {
-    useNewUrlParser: true,
-    useUnifiedTopology: true
+connection.once('open', () => {
+    app.listen(PORT, () => console.log(`🌍 Connected on localhost:${PORT}`));
 });
-
-mongoose.set('debug', true);
-
-app.listen(PORT, () => console.log(`🌍 Connected on localhost:${PORT}`));
